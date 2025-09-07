@@ -31,14 +31,14 @@ body {
 }
 .container {
     background-color: var(--container-bg);
-    padding: 2.5rem;
+    padding: 1.5rem; /* Ajustat */
     border-radius: 1rem;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     max-width: 90vw;
     width: 500px;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem; /* Ajustat */
 }
 h1 { color: var(--primary-color); font-size: 2rem; margin: 0; font-weight: 700; }
 .header-stats { display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--secondary-text-color); padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -47,7 +47,7 @@ h1 { color: var(--primary-color); font-size: 2rem; margin: 0; font-weight: 700; 
 .difficulty-button { background-color:var(--primary-color); color:var(--bg-color); border:none; padding:0.75rem 1.25rem; font-size:1rem; border-radius:9999px; cursor:pointer; font-weight:600; }
 .difficulty-button:hover { background-color:#9b59b6; transform:translateY(-2px); }
 #game-content { display:flex; flex-direction:column; gap:1.5rem; }
-canvas { background-color:white; border:2px solid var(--text-color); border-radius:0.5rem; width:100%; height:auto; max-height:350px; }
+canvas { background-color:white; border:2px solid var(--text-color); border-radius:0.5rem; width:100%; height:auto; max-height:280px; /* Ajustat */ }
 #controls { display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem; }
 .note-button { background-color:var(--button-color); color:var(--bg-color); border:none; padding:0.75rem 1.25rem; font-size:1.25rem; border-radius:9999px; cursor:pointer; min-width:60px; font-weight:600; }
 .note-button:hover { background-color:#c72b6b; transform:translateY(-2px); }
@@ -60,7 +60,7 @@ canvas { background-color:white; border:2px solid var(--text-color); border-radi
 <body>
 <div class="container">
     <div id="difficulty-screen">
-        <h1></h1>
+        <h1>Lectura de notes</h1>
         <p>Quantes notes vols que apareguin en cada exercici?</p>
         <div id="difficulty-buttons">
             <button class="difficulty-button" data-level="2">2 notes</button>
