@@ -179,6 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return allNotesGlobal.findIndex(n => n.fullNote === note.fullNote && n.clef === note.clef);
     }
     
+    // Funció per reproduir un so
+    function playSound(filename) {
+        const audio = new Audio(`sounds/${filename}`);
+        audio.play().catch(e => console.error("Error al reproduir el so:", e));
+    }
+    
     function drawStaff() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = staffColor;
@@ -364,6 +370,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (noteIndex < currentNotes.length) {
             const currentCorrectNote = currentNotes[noteIndex].fullNote.charAt(0);
             if (note === currentCorrectNote) {
+                // Reprodueix so correcte
+                playSound('correcte.mp3');
                 feedbackArea.style.color = correctColor;
                 if (noteIndex === currentNotes.length - 1) {
                     feedbackArea.textContent = `Correcte! L'acord ha estat completat.`;
@@ -375,6 +383,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     checkAnswer();
                 }
             } else {
+                // Reprodueix so d'error
+                playSound('error.mp3');
                 feedbackArea.style.color = incorrectColor;
                 feedbackArea.textContent = `Incorrecte. La nota correcta era ${currentCorrectNote}.`;
                 checkAnswer();
@@ -410,6 +420,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     difficultyButtons.forEach(btn => {
         btn.addEventListener('click', () => {
+            // Reprodueix so de benvinguda
+            playSound('benvinguda.mp3');
             const numNotes = parseInt(btn.dataset.level);
             difficultyScreen.classList.add('hidden');
             gameContent.classList.remove('hidden');
