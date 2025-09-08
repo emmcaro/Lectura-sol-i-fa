@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "F5": staffTopY_Treble,
             "G5": staffTopY_Treble - lineHeight * 0.5,
             "A5": staffTopY_Treble - lineHeight * 1,
-            "B5": staffTopY_Treble - lineHeight * 1.5,
+            "B5": staffTopY_Treble - lineHeight - 1.5,
         },
         bass: {
             "E2": staffTopY_Bass + lineHeight * 5,
@@ -373,17 +373,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (noteIndex < currentNotes.length) {
             const currentCorrectNote = currentNotes[noteIndex].fullNote.charAt(0);
             if (note === currentCorrectNote) {
-                // Reprodueix so correcte
-                playSound('correcte.mp3');
                 feedbackArea.style.color = correctColor;
                 if (noteIndex === currentNotes.length - 1) {
                     feedbackArea.textContent = `Correcte! L'acord ha estat completat.`;
+                    playSound('correcte.mp3'); // Reprodueix el so només quan l'acord està complet
+                    checkAnswer();
                 } else {
                     feedbackArea.textContent = `Correcte! Ara introdueix la següent nota (de greu a agut).`;
-                }
-                noteIndex++;
-                if (noteIndex === currentNotes.length) {
-                    checkAnswer();
+                    noteIndex++;
                 }
             } else {
                 // Reprodueix so d'error
@@ -397,12 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function checkAnswer() {
         if (noteIndex === currentNotes.length) {
-            feedbackArea.style.color = correctColor;
-            feedbackArea.textContent = `Correcte! Has encertat totes les ${currentDifficulty} notes.`;
             score++;
-        } else {
-            feedbackArea.style.color = incorrectColor;
-            feedbackArea.textContent = `Incorrecte! Has fallat una nota. Les notes eren: ${currentNotes.map(n => n.fullNote.charAt(0)).join(', ')}.`;
         }
         scoreDisplay.textContent = score;
         noteButtons.forEach(b => b.disabled = true);
@@ -429,8 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     difficultyButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Reprodueix so de benvinguda i inicia el temps
-            playSound('benvinguda.mp3');
+            // El so de benvinguda ha estat eliminat
             startTime = Date.now();
             const numNotes = parseInt(btn.dataset.level);
             difficultyScreen.classList.add('hidden');
