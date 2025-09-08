@@ -374,13 +374,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentCorrectNote = currentNotes[noteIndex].fullNote.charAt(0);
             if (note === currentCorrectNote) {
                 feedbackArea.style.color = correctColor;
-                if (noteIndex === currentNotes.length - 1) {
+                noteIndex++;
+                if (noteIndex === currentNotes.length) {
                     feedbackArea.textContent = `Correcte! L'acord ha estat completat.`;
-                    playSound('correcte.mp3'); // Reprodueix el so només quan l'acord està complet
+                    playSound('correcte.mp3');
                     checkAnswer();
                 } else {
                     feedbackArea.textContent = `Correcte! Ara introdueix la següent nota (de greu a agut).`;
-                    noteIndex++;
                 }
             } else {
                 // Reprodueix so d'error
