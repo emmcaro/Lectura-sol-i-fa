@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const lineHeight = 20;
     const staffTopY_Treble = 60;
-    const staffTopY_Bass = staffTopY_Treble + 5 * lineHeight + 40; 
+    const staffTopY_Bass = staffTopY_Treble + 5 * lineHeight + 50; 
     const MAX_QUESTIONS = 10;
 
     let score = 0;
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.stroke();
         }
         ctx.font = '133px Arial';
-        ctx.fillText('𝄢', 40, staffTopY_Bass + lineHeight * 4.7);
+        ctx.fillText('𝄢', 40, staffTopY_Bass + lineHeight * 4.7 - 10); // Ajust per moure només el símbol
     }
     
     function drawWholeNote(x, y, clef) {
