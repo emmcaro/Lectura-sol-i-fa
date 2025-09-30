@@ -55,6 +55,7 @@ canvas { background-color:white; border:2px solid var(--text-color); border-radi
 #next-button { background-color:var(--button-color); color:var(--bg-color); border:none; padding:0.75rem 1.5rem; font-size:1rem; border-radius:9999px; cursor:pointer; font-weight:600; }
 .play-again-button { background-color:var(--primary-color); color:var(--bg-color); border:none; padding:0.75rem 1.5rem; font-size:1rem; border-radius:9999px; cursor:pointer; font-weight:600; margin-top:1rem; }
 .hidden { display:none; }
+#timer { font-weight: bold; color: var(--primary-color); } /* Afegit per mostrar el temporitzador */
 </style>
 </head>
 <body>
@@ -71,6 +72,7 @@ canvas { background-color:white; border:2px solid var(--text-color); border-radi
     <div id="game-content" class="hidden">
         <div class="header-stats">
             <div>Punts: <span id="score">0</span> / <span id="totalQuestions">0</span></div>
+            <div>Temps: <span id="timer">10</span>s</div> <!-- Afegit temporitzador -->
         </div>
         <canvas id="staffCanvas" width="500" height="350"></canvas>
         <div id="controls">
@@ -110,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalScoreDisplay = document.getElementById('finalScoreDisplay');
     const finalTimeDisplay = document.getElementById('finalTimeDisplay');
     const playAgainButton = document.querySelector('.play-again-button');
+    const timerDisplay = document.getElementById('timer'); // Nou element temporitzador
 
     const lineHeight = 20;
     const staffTopY_Treble = 60;
@@ -122,6 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let noteIndex = 0;
     let currentDifficulty;
     let startTime;
+    let timerInterval; // Interval per al temporitzador
+    let timeLeft = 10;
 
     const rootStyles = getComputedStyle(document.documentElement);
     const correctColor = rootStyles.getPropertyValue('--correct-color');
@@ -367,6 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
             totalQuestions++;
             totalQuestionsDisplay.textContent = totalQuestions;
         }
+        startTimer(); // Reinicia el temporitzador
     }
     
     function handleNoteSelection(note) {
@@ -393,6 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkAnswer() {
+        clearInterval(timerInterval); // Atura el temporitzador quan es contesta o expira
         if (noteIndex === currentNotes.length) {
             score++;
         }
@@ -417,6 +424,23 @@ document.addEventListener('DOMContentLoaded', () => {
             nextButton.textContent = "Següent Repte";
             nextButton.onclick = () => generateQuestion(currentDifficulty);
         }
+    }
+
+    // Funció per iniciar el temporitzador de 10 segons
+    function startTimer() {
+        clearInterval(timerInterval);
+        timeLeft = 10;
+        timerDisplay.textContent = timeLeft;
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            timerDisplay.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                feedbackArea.style.color = incorrectColor;
+                feedbackArea.textContent = "Temps esgotat!";
+                checkAnswer();
+            }
+        }, 1000);
     }
 
     difficultyButtons.forEach(btn => {
